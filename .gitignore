@@ -63,4 +63,7 @@ typings/
 # Webstorm Files
 .idea/
 
+# Config Files
+cfg/
+
 # End of https://www.gitignore.io/api/node

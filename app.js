@@ -12,9 +12,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'fe', 'dist')));
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/api', require('./routes/api'));
 
 // catch 404 and forward to error handler
@@ -23,7 +23,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -33,4 +33,17 @@ app.use(function(err, req, res, next) {
   res.send({success: false, msg: err.message});
 });
 
+// Set Monggoose
+const mongoose = require('mongoose');
+const cfg = require('./cfg/cfg');
+
+if(!cfg) {
+  console.error('./cfg/cfg.js file not exists');
+  process.exit(1);
+}
+
+mongoose.connect(cfg.db.url, (err) => {
+  if(err) return console.error(err);
+  console.log('mongoose connected');
+});
 module.exports = app;

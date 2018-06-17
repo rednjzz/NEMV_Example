@@ -33,9 +33,10 @@ app.use(function(err, req, res) {
   res.send({success: false, msg: err.message});
 });
 
-// Set Monggoose
+// DataBases
 const mongoose = require('mongoose');
 const cfg = require('./cfg/cfg');
+const pg = require('./playGround');
 
 if(!cfg) {
   console.error('./cfg/cfg.js file not exists');
@@ -45,5 +46,10 @@ if(!cfg) {
 mongoose.connect(cfg.db.url, (err) => {
   if(err) return console.error(err);
   console.log('mongoose connected');
+  pg.test.model();
 });
+
+
+
+
 module.exports = app;

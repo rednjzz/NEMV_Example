@@ -4,5 +4,6 @@ module.exports = {
     },
     web: {
         // For http, https, port, etc...
+        cors: true, //for development
     }
 };

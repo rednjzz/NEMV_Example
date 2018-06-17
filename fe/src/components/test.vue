@@ -16,6 +16,12 @@
                          :rows="3"
                          :max-rows="6">
         </b-form-textarea>
+        <b-form-input v-model="txtPostName" class="mb-3"
+                      type="text"
+                      placeholder="CompanyName"></b-form-input>
+        <b-form-input v-model="txtPostRemark" class="mb-3"
+                      type="text"
+                      placeholder="CompanyRemarks"></b-form-input>
         <b-button @click="sendPost"
                   variant="primary"> Transmit</b-button>
       </b-card>
@@ -52,6 +58,8 @@
         txtPost: '',
         txtPut: '',
         txtDelete: '',
+        txtPostName: '',
+        txtPostRemark: '',
       };
     },
     methods: {
@@ -65,7 +73,11 @@
           });
       },
       sendPost() {
-        this.$axios.post('http://localhost:3000/api/data/company')
+        const body = {
+          name: this.txtPostName,
+          rmk: this.txtPostRemark,
+        };
+        this.$axios.post('http://localhost:3000/api/data/company', body)
           .then((res) => {
             this.txtPost = JSON.stringify(res.data);
           })
